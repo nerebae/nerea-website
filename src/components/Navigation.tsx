@@ -31,7 +31,7 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <a href="#hero" className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          NH
+          NVA
         </a>
 
         {/* Desktop Navigation */}

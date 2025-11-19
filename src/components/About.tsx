@@ -10,14 +10,13 @@ const About = () => {
         
         <div className="max-w-3xl mx-auto">
           <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
-            Hi! I'm a bilingual (Spanish/English) junior developer with a genuine passion for technology 
-            and creating meaningful user experiences. I believe in the power of technology to improve 
-            lives and help others achieve their goals.
+            Hola! I'm a bilingual (Spanish/English) junior developer based in the UK with a passion for technology.  
+            I’m a motivated and curious person with a strong interest in web development. I enjoy tackling challenges, 
+            learning from others, and contributing to projects that have a real-world impact.
           </p>
           
           <p className="text-lg text-foreground/80 mb-8 leading-relaxed">
-            When I'm not coding, I'm focused on wellbeing and staying active. I enjoy hitting the gym, 
-            playing guitar and piano, and staying competitive through badminton and football.
+            When I’m not coding, I’m expanding my love for languages, practising guitar, or reading to unwind.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mt-12">
@@ -25,7 +24,7 @@ const About = () => {
               <Globe className="w-10 h-10 text-accent mb-4 mx-auto" />
               <h3 className="font-semibold text-center mb-2">Languages</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Spanish, English, Quechua, French, Italian
+                Spanish, English, Quechua, Italian, French
               </p>
             </div>
             
@@ -33,7 +32,7 @@ const About = () => {
               <Heart className="w-10 h-10 text-accent mb-4 mx-auto" />
               <h3 className="font-semibold text-center mb-2">Passions</h3>
               <p className="text-sm text-muted-foreground text-center">
-                UX Design, Wellbeing, Helping Others
+                UX Design, Web Development, AI
               </p>
             </div>
             
@@ -41,7 +40,7 @@ const About = () => {
               <Smile className="w-10 h-10 text-accent mb-4 mx-auto" />
               <h3 className="font-semibold text-center mb-2">Hobbies</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Gym, Guitar, Piano, Badminton, Football
+                Gym, Football, Cinema, Music, Reading
               </p>
             </div>
           </div>

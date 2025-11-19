@@ -113,7 +113,7 @@ const Contact = () => {
               <Button variant="outline" size="lg" asChild>
                 <a href="mailto:naomi.halls@example.com">
                   <Mail className="mr-2" size={18} />
-                  naomi.halls@example.com
+                  eliovaldivieso1975@gmail.com
                 </a>
               </Button>
             </div>

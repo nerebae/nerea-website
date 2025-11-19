@@ -1,5 +1,39 @@
 import { Code, Database, Wrench, Shield, FileText } from "lucide-react";
 
+// Custom Flag Components
+const SpanishFlag = () => (
+  <div className="w-8 h-6 rounded-sm overflow-hidden border border-gray-300">
+    <div className="h-2 bg-red-500"></div>
+    <div className="h-2 bg-yellow-400"></div>
+    <div className="h-2 bg-red-500"></div>
+  </div>
+);
+
+const UKFlag = () => (
+  <div className="w-8 h-6 rounded-sm overflow-hidden border border-gray-300 bg-blue-700 relative">
+    {/* White diagonal crosses */}
+    <div className="absolute inset-0">
+      <div className="absolute top-0 left-0 w-full h-full bg-white transform rotate-12 origin-center scale-x-[3] scale-y-[0.2]"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-white transform -rotate-12 origin-center scale-x-[3] scale-y-[0.2]"></div>
+    </div>
+    {/* Red diagonal crosses */}
+    <div className="absolute inset-0">
+      <div className="absolute top-0 left-0 w-full h-full bg-red-600 transform rotate-12 origin-center scale-x-[3] scale-y-[0.1]"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-red-600 transform -rotate-12 origin-center scale-x-[3] scale-y-[0.1]"></div>
+    </div>
+    {/* White cross */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-full h-1 bg-white absolute"></div>
+      <div className="w-1 h-full bg-white absolute"></div>
+    </div>
+    {/* Red cross */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-full h-0.5 bg-red-600 absolute"></div>
+      <div className="w-0.5 h-full bg-red-600 absolute"></div>
+    </div>
+  </div>
+);
+
 const Skills = () => {
   const skillCategories = [
     {
@@ -30,8 +64,8 @@ const Skills = () => {
   ];
 
   const languages = [
-    { name: "Spanish", level: "Native" },
-    { name: "English", level: "Fluent" },
+    { name: "Spanish", level: "Native", flag: SpanishFlag },
+    { name: "English", level: "Fluent", flag: UKFlag },
   ];
 
   return (
@@ -48,15 +82,21 @@ const Skills = () => {
         <div className="max-w-md mx-auto mb-12">
           <h3 className="text-2xl font-semibold text-center mb-6">Languages</h3>
           <div className="grid grid-cols-2 gap-4">
-            {languages.map((lang) => (
-              <div
-                key={lang.name}
-                className="bg-card p-4 rounded-xl shadow-soft text-center"
-              >
-                <p className="font-semibold text-foreground">{lang.name}</p>
-                <p className="text-sm text-muted-foreground">{lang.level}</p>
-              </div>
-            ))}
+            {languages.map((lang) => {
+              const FlagComponent = lang.flag;
+              return (
+                <div
+                  key={lang.name}
+                  className="bg-card p-4 rounded-xl shadow-soft text-center"
+                >
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <FlagComponent />
+                    <p className="font-semibold text-foreground">{lang.name}</p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{lang.level}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
 
