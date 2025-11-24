@@ -16,9 +16,9 @@ const Navigation = () => {
 
   const navItems = [
     { label: "About", href: "#about" },
+    { label: "Projects", href: "#projects" },
     { label: "Skills", href: "#skills" },
     { label: "Education", href: "#education" },
-    { label: "Projects", href: "#projects" },
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
   ];
@@ -26,11 +26,16 @@ const Navigation = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-card/95 backdrop-blur-md shadow-soft" : "bg-transparent"
+        isScrolled
+          ? "bg-card/95 backdrop-blur-md shadow-soft"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="#hero" className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <a
+          href="#hero"
+          className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+        >
           NVA
         </a>
 

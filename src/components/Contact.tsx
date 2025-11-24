@@ -1,167 +1,121 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail, Send, Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, Github, Linkedin, Send, ExternalLink } from "lucide-react";
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api';
-      const response = await fetch(`${apiUrl}/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Success message
-        toast({
-          title: "Message Sent!",
-          description: "Thank you for reaching out. I'll get back to you soon!",
-        });
-
-        // Reset form
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        // Handle API errors
-        toast({
-          title: "Failed to Send Message",
-          description: data.message || "There was an error sending your message. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('Contact form error:', error);
-      toast({
-        title: "Network Error",
-        description: "Unable to send message. Please check your connection and try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const socialLinks = [
+    {
+      icon: Github,
+      title: "GitHub",
+      description: "Check out my repositories",
+      link: "https://github.com/nerebae",
+      color: "hover:text-purple-600 dark:hover:text-purple-400",
+    },
+    {
+      icon: Linkedin,
+      title: "LinkedIn",
+      description: "Let's connect professionally",
+      link: "http://www.linkedin.com/in/nerea-valdivieso-arevalo",
+      color: "hover:text-blue-600 dark:hover:text-blue-400",
+    },
+  ];
 
   return (
-    <section id="contact" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          Get In Touch
-        </h2>
-        <p className="text-center text-muted-foreground mb-12">
-          Have a question or want to work together? Let's connect!
-        </p>
+    <section
+      id="contact"
+      className="py-20 bg-gradient-to-br from-muted/20 via-background to-muted/10"
+    >
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <div className="inline-block p-3 bg-primary/10 rounded-xl mb-6">
+            <Send className="w-8 h-8 text-primary" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Get In Touch
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            I'd love to hear from you. Feel free to reach out through email or
+            connect with me on social platforms.
+          </p>
+        </div>
 
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-card p-8 rounded-2xl shadow-soft">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full"
-                  disabled={isSubmitting}
-                />
+        <div className="max-w-3xl mx-auto">
+          {/* Main Email Call-to-Action */}
+          <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20 mb-8">
+            <CardContent className="p-10 text-center">
+              <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Mail className="w-10 h-10 text-primary" />
               </div>
+              <h3 className="text-2xl font-bold mb-3">
+                Ready to Start a Conversation?
+              </h3>
+              <p className="text-muted-foreground mb-8 text-lg">
+                Whether it's about a project, job opportunity, or just to
+                connect, I'm always excited to hear from fellow developers and
+                potential collaborators.
+              </p>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full"
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  placeholder="Your message..."
-                  rows={5}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full resize-none"
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <Button type="submit" size="lg" className="w-full" variant="hero" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2" size={18} animate-spin />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="mr-2" size={18} />
-                    Send Message
-                  </>
-                )}
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 group"
+                onClick={() =>
+                  (window.location.href = "mailto:eliovaldivieso1975@gmail.com")
+                }
+              >
+                <Mail className="mr-3 w-6 h-6 group-hover:scale-110 transition-transform" />
+                Send Email
               </Button>
-            </form>
 
-            <div className="mt-8 pt-8 border-t border-border text-center">
-              <p className="text-muted-foreground mb-4">Or reach out directly</p>
-              <Button variant="outline" size="lg" asChild>
-                <a href="mailto:naomi.halls@example.com">
-                  <Mail className="mr-2" size={18} />
-                  eliovaldivieso1975@gmail.com
-                </a>
-              </Button>
+              <p className="text-sm text-muted-foreground mt-4">
+                eliovaldivieso1975@gmail.com
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Social Links Grid */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {socialLinks.map((social, index) => {
+              const IconComponent = social.icon;
+              return (
+                <Card
+                  key={index}
+                  className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-muted hover:border-primary/30"
+                >
+                  <CardContent className="p-8 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent
+                        className={`w-8 h-8 ${social.color} transition-colors`}
+                      />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {social.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      {social.description}
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="group/btn"
+                      onClick={() => window.open(social.link, "_blank")}
+                    >
+                      Visit {social.title}
+                      <ExternalLink className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Quick Response Promise */}
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center space-x-3 text-muted-foreground bg-muted/50 px-6 py-3 rounded-full">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium">
+                Usually responds within 24 hours
+              </span>
             </div>
           </div>
         </div>
