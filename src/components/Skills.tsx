@@ -1,4 +1,17 @@
-import { Code, Database, Wrench, Shield, FileText } from "lucide-react";
+import {
+  Code,
+  Database,
+  Wrench,
+  Shield,
+  FileText,
+  Layers,
+  Server,
+  ShoppingCart,
+  Palette,
+  Zap,
+  Network,
+  Layout,
+} from "lucide-react";
 
 // Custom Flag Components
 const SpanishFlag = () => (
@@ -39,27 +52,52 @@ const Skills = () => {
     {
       icon: Code,
       title: "Programming",
-      skills: ["Python", "Java", "JavaScript", "React", "CSS", "HTML"],
+      skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Python"],
+    },
+    {
+      icon: Layers,
+      title: "Frontend Frameworks & Libraries",
+      skills: ["React", "Vue.js", "Angular", "Bootstrap"],
+    },
+    {
+      icon: Server,
+      title: "Backend Technologies",
+      skills: ["Node.js", "PHP", "Django", "Spring"],
+    },
+    {
+      icon: Palette,
+      title: "UX/UI Design",
+      skills: ["UX/UI Principles", "Responsive Design", "Figma", "Sketch"],
     },
     {
       icon: Database,
       title: "Databases",
-      skills: ["SQL", "MySQL", "SQLite"],
+      skills: ["MySQL", "PostgreSQL", "MongoDB", "SQL", "SQLite"],
     },
     {
       icon: Wrench,
       title: "Tools & Practices",
-      skills: ["Git", "Linux/Unix", "Agile", "TDD", "Node.js"],
+      skills: ["Git", "Linux/Unix", "Agile", "TDD", "SDLC", "Unit Tests"],
     },
     {
-      icon: Shield,
-      title: "Cybersecurity",
-      skills: ["Networking Protocols", "Firewalls", "Secure Communication"],
+      icon: Network,
+      title: "APIs & Integration",
+      skills: ["REST APIs", "SOAP"],
+    },
+    {
+      icon: ShoppingCart,
+      title: "E-Commerce Platforms",
+      skills: ["Shopify"],
     },
     {
       icon: FileText,
-      title: "Software",
-      skills: ["Microsoft Office", "Google Workspace"],
+      title: "Content Management Systems",
+      skills: ["WordPress"],
+    },
+    {
+      icon: FileText,
+      title: "Productivity Software",
+      skills: ["Microsoft Office", "Google Workspace", "Trello"],
     },
   ];
 
@@ -111,17 +149,16 @@ const Skills = () => {
               >
                 <Icon className="w-10 h-10 text-accent mb-4" />
                 <h3 className="text-xl font-semibold mb-4">{category.title}</h3>
-                <ul className="space-y-2">
+                <div className="grid md:grid-cols-2 gap-3">
                   {category.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="text-sm text-muted-foreground flex items-center gap-2"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                      {skill}
-                    </li>
+                    <div key={skill} className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-accent" />
+                      <span className="text-sm text-foreground/80">
+                        {skill}
+                      </span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             );
           })}

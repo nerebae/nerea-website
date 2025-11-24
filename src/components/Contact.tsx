@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -12,8 +12,9 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -37,14 +38,47 @@ const Contact = () => {
       return;
     }
 
-    // Success message
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
-    });
+    setIsSubmitting(true);
 
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const response = await fetch(`${apiUrl}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success message
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for reaching out. I'll get back to you soon!",
+        });
+
+        // Reset form
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        // Handle API errors
+        toast({
+          title: "Failed to Send Message",
+          description: data.message || "There was an error sending your message. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Network Error",
+        description: "Unable to send message. Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,6 +105,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -85,6 +120,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -99,12 +135,22 @@ const Contact = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full resize-none"
+                  disabled={isSubmitting}
                 />
               </div>
 
-              <Button type="submit" size="lg" className="w-full" variant="hero">
-                <Send className="mr-2" size={18} />
-                Send Message
+              <Button type="submit" size="lg" className="w-full" variant="hero" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2" size={18} animate-spin />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2" size={18} />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
 
